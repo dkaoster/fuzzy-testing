@@ -7,7 +7,7 @@ machine:
 dependencies:
   override:
     # Make sure that we are developing on a new version
-    - ! npm show fuzzy-testing versions | grep "$(jq '.version' package.json | tr -d '"')"
+    - npm show fuzzy-testing versions | grep -v "$(jq '.version' package.json | tr -d '"')"
     - npm install -g npm@5
 
 test:
