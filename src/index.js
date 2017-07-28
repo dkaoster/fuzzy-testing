@@ -114,4 +114,5 @@ function fuzzFunction(func, options) {
   return errors;
 }
 
+// eslint-disable-next-line import/prefer-default-export
 export { fuzzFunction };

@@ -1,3 +1,5 @@
+/* eslint-disable no-undef */
+
 import assert from 'assert';
 import { fuzzFunction } from '../';
 
