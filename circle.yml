@@ -7,9 +7,12 @@ machine:
 dependencies:
   pre:
     - npm install -g npm@5
+  override:
+    # Do nothing
+    - :
 
 test:
-  post:
+  override:
     # make sure that the version is updated before merging
     - npm install
 
