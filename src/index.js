@@ -1,5 +1,5 @@
 import assert from 'assert';
-import { combineMultipleLengths, typesMap } from './utils';
+import { combineMultipleLengths, typesMap, objectMap, propTypesMap } from './utils';
 
 /*
  *  _____ _   _ ____________   __
@@ -114,4 +114,40 @@ function fuzzFunction(func, options) {
   return errors;
 }
 
-export { fuzzFunction };
+/**
+ *
+ * fuzzReactComponent
+ *
+ * @param component
+ * @param options
+ * @returns {Array}
+ */
+function fuzzReactComponent(component, options) {
+  // Ensure that component is a react component
+  assert((component.prototype && component.prototype.isReactComponent)
+    || typeof component === 'function', 'Component is not a React Component');
+
+  // Process options
+  options = Object.assign({
+    returnFirstError: true,
+    iterations: 3,
+    argumentValues: [],
+    canThrowError: false,
+  }, options);
+
+  // Process props and generate values
+  if (!component.propTypes) {
+    // Component has no props, no need to fuzz.
+    return [];
+  }
+
+  const randomProps = objectMap(component.propTypes, propTypesMap);
+
+  // Run the fuzzer on the function multiple times.
+  for (let iteration = 0; iteration < options.iterations; iteration += 1) {
+    // TODO
+  }
+  return [];
+}
+
+export { fuzzFunction, fuzzReactComponent };

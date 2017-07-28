@@ -1,3 +1,4 @@
+import assert from 'assert';
 
 /**
  *
@@ -8,6 +9,10 @@
  * @returns []
  */
 function combine(a, b) {
+  // ensure that arrays were given
+  assert(Array.isArray(a), 'a is not an array.');
+  assert(Array.isArray(b), 'b is not an array.');
+
   const superSet = [];
   a.forEach((aElem) => {
     b.forEach((bElem) => {
@@ -27,6 +32,11 @@ function combine(a, b) {
  * @returns []
  */
 function combineToArray(a, b) {
+  // ensure that arrays were given
+  assert(Array.isArray(a), 'a is not an array.');
+  assert(Array.isArray(b), 'b is not an array.');
+  a.map(item => assert(Array.isArray(item), 'item in a is not an array.'));
+
   const superSet = [];
   a.forEach((aElem) => {
     b.forEach((bElem) => {
@@ -45,6 +55,10 @@ function combineToArray(a, b) {
  * @returns []
  */
 function combineMultiple(a, end) {
+  // ensure that valid values were given
+  assert(Array.isArray(a), 'a is not an array.');
+  assert(typeof end === 'number', 'end is not an number.');
+
   let collector = [[]];
   for (let i = 0; i < end; i += 1) {
     collector = combineToArray(collector, a);
@@ -62,8 +76,14 @@ function combineMultiple(a, end) {
  * @returns []
  */
 function combineMultipleLengths(a, end, start) {
-  let collector = [[[]]];
+  // ensure that valid values were given
   start = start || 0;
+  assert(Array.isArray(a), 'a is not an array.');
+  assert(typeof end === 'number', 'end is not an number.');
+  assert(typeof start === 'number' || !(start), 'start is not an number.');
+  assert(end >= start, 'start is greater than end.');
+
+  let collector = [[[]]];
   if (start > 0) {
     collector = [combineMultiple(a, start)];
   }
