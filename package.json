@@ -39,6 +39,7 @@
     "eslint": "^3.12.2",
     "eslint-config-kyt": "^0.0.1",
     "eslint-plugin-json": "^1.2.0",
+    "eslint-plugin-jsx-a11y": "^6.0.2",
     "jest": "^20.0.1"
   }
 }
