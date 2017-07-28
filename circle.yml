@@ -1,0 +1,19 @@
+machine:
+  services:
+    - docker
+  node:
+    version: 6.11.1
+
+dependencies:
+  override:
+    - npm install -g npm@5
+
+test:
+  override:
+    - npm install
+
+deployment:
+  npm:
+    tag: /.*/
+    commands:
+      - npm-publish
