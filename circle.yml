@@ -1,0 +1,20 @@
+machine:
+  services:
+    - docker
+  node:
+    version: 6.11.1
+
+dependencies:
+  pre:
+    - npm install -g npm@5
+
+test:
+  post:
+    # make sure that the version is updated before merging
+    - npm install
+
+deployment:
+  npm:
+    tag: /.*/
+    commands:
+      - npm-publish
