@@ -8,8 +8,8 @@ dependencies:
   pre:
     - npm install -g npm@5
   override:
-    # Do nothing
-    - :
+    # do nothing, override inference
+    - sleep 0
 
 test:
   override:
