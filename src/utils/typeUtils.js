@@ -1,3 +1,4 @@
+// eslint-disable-next-line import/no-extraneous-dependencies
 import PropTypes from 'prop-types';
 // Import the list of bad strings
 import badStrings from './strings/badStrings';
@@ -136,7 +137,7 @@ function propTypesMap(type) {
     case PropTypes.number:
       return typesMap.number;
     case PropTypes.shape:
-      return;
+      return {};
     default:
       return typesMap.undefined;
   }

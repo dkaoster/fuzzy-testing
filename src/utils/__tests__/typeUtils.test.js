@@ -1,3 +1,5 @@
+/* eslint-disable no-undef */
+
 import { typesMap, primitiveTypesMap } from '../typeUtils';
 
 describe('typeUtils tests', () => {

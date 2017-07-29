@@ -26,4 +26,5 @@ function objectMap(object, func) {
   return objRet;
 }
 
+// eslint-disable-next-line import/prefer-default-export
 export { objectMap };

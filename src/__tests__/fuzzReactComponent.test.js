@@ -1,3 +1,5 @@
+/* eslint-disable no-undef */
+
 import { Component } from 'react';
 import PropTypes from 'prop-types';
 import { fuzzReactComponent } from '../';
@@ -6,6 +8,9 @@ import { fuzzReactComponent } from '../';
 class testComponent extends Component {
   static propTypes = {
     content: PropTypes.string,
+  };
+  static defaultProps = {
+    content: 'test',
   };
   componentWillMount() {
     this.setState({

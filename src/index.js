@@ -122,10 +122,10 @@ function fuzzFunction(func, options) {
  * @param options
  * @returns {Array}
  */
-function fuzzReactComponent(component, options) {
+function fuzzReactComponent(Component, options) {
   // Ensure that component is a react component
-  assert((component.prototype && component.prototype.isReactComponent)
-    || typeof component === 'function', 'Component is not a React Component');
+  assert((Component.prototype && Component.prototype.isReactComponent)
+    || typeof Component === 'function', 'Component is not a React Component');
 
   // Process options
   options = Object.assign({
@@ -136,16 +136,18 @@ function fuzzReactComponent(component, options) {
   }, options);
 
   // Process props and generate values
-  if (!component.propTypes) {
+  if (!Component.propTypes) {
     // Component has no props, no need to fuzz.
     return [];
   }
 
-  const randomProps = objectMap(component.propTypes, propTypesMap);
+  const randomProps = objectMap(Component.propTypes, propTypesMap);
 
   // Run the fuzzer on the function multiple times.
   for (let iteration = 0; iteration < options.iterations; iteration += 1) {
-    // TODO
+    const randomPropsInst = objectMap(randomProps, prop => prop());
+    // eslint-disable-next-line no-unused-vars
+    const comp = new Component(randomPropsInst);
   }
   return [];
 }
