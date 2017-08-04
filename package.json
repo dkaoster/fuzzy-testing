@@ -2,7 +2,10 @@
   "name": "fuzzy-testing",
   "version": "0.0.2",
   "description": "Javascript fuzz testing tools",
-  "main": "index.js",
+  "main": "build/index.js",
+  "files": [
+    "build"
+  ],
   "scripts": {
     "prepublish": "npm run lint && npm run test && npm run build",
     "build": "babel --out-dir build src --ignore **/*.test.js",
@@ -41,6 +44,8 @@
     "eslint-plugin-import": "^2.7.0",
     "eslint-plugin-jsx-a11y": "^5.0.1",
     "eslint-plugin-react": "^7.1.0",
-    "jest": "^20.0.1"
+    "jest": "^20.0.1",
+    "prop-types": "^15.5.10",
+    "react": "^15.6.1"
   }
 }
