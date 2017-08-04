@@ -118,7 +118,17 @@ function fuzzFunction(func, options) {
  *
  * fuzzReactComponent
  *
- * @param component
+ * fuzzReactComponent takes a function and an object of options and fuzzes the component.
+ * It returns the results of the fuzz in an array.
+ *
+ * options:
+ *    returnTypes: can be an array of types represented by strings, or a function that validates.
+ *    returnFirstError: boolean that does short circuit evaluation if true.
+ *    argumentValues: an array of values that will be tested.
+ *    iterations: the number of times that a function will be run per argument combination.
+ *    canThrowError: whether or not the function can throw an error or not.
+ *
+ * @param Component
  * @param options
  * @returns {Array}
  */
