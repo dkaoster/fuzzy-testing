@@ -11,7 +11,7 @@
     "build": "babel --out-dir build src --ignore **/*.test.js",
     "test": "jest",
     "lint": "eslint ./src",
-    "publish": "npm-publish",
+    "publish": "npm-publish"
   },
   "repository": {
     "type": "git",
