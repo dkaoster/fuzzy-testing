@@ -133,6 +133,7 @@ function fuzzReactComponent(Component, options) {
     iterations: 3,
     argumentValues: [],
     canThrowError: false,
+    returnTypes: ['string'],
   }, options);
 
   // Process props and generate values
@@ -143,11 +144,41 @@ function fuzzReactComponent(Component, options) {
 
   const randomProps = objectMap(Component.propTypes, propTypesMap);
 
+  // An array for keeping track of errors
+  const errors = [];
+
   // Run the fuzzer on the function multiple times.
   for (let iteration = 0; iteration < options.iterations; iteration += 1) {
     const randomPropsInst = objectMap(randomProps, prop => prop());
     // eslint-disable-next-line no-unused-vars
     const comp = new Component(randomPropsInst);
+    try {
+      // If returnTypes is an array, look for the type inside the array.
+      if (Array.isArray(options.returnTypes) &&
+        options.returnTypes.indexOf(typeof comp.render()) < 0
+      ) {
+        errors.push(`arguments ${randomPropsInst} did not return one of ${options.returnTypes}`);
+        if (options.returnFirstError) {
+          return errors;
+        }
+      }
+      // If returnTypes is a function, execute the validation function on the result.
+      if (
+        (typeof options.returnTypes === 'function' && !options.returnTypes(comp.render()))
+      ) {
+        errors.push(`arguments ${randomPropsInst} did not satisfy ${options.returnTypes}`);
+        if (options.returnFirstError) {
+          return errors;
+        }
+      }
+    } catch (e) {
+      if (!options.canThrowError) {
+        errors.push(`arguments ${randomPropsInst} threw error ${e}`);
+        if (options.returnFirstError) {
+          return errors;
+        }
+      }
+    }
   }
   return [];
 }

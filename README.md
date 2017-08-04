@@ -12,7 +12,7 @@ To install to your local project, simply run:
 npm install fuzzy-testing
 ```
 
-then, call `fuzzFunction` from within your testing code. If you're using jest, you can do something like this:
+then, call one of the fuzzFunctions from within your testing code. If you're using jest, you can do something like this:
 
 ```js
 import { fuzzFunction } from 'fuzzy-testing';
@@ -35,4 +35,13 @@ expect(fuzzFunction(onlyBools, { maxArgs: 1 })).toEqual([]);
 - iterations: the number of times that a function will be run per argument combination.
 - canThrowError: whether or not the function can throw an error or not.
 
+## fuzzReactComponent
 
+Fuzzy testing also allows you to fuzz the render method of react component via `fuzzReactComponent`.
+
+#### options
+
+- returnTypes: can be an array of types represented by strings, or a function that validates.
+- returnFirstError: boolean that does short circuit evaluation if true.
+- iterations: the number of times that a function will be run per argument combination.
+- canThrowError: whether or not the function can throw an error or not.

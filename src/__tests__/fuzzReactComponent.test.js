@@ -23,6 +23,24 @@ class testComponent extends Component {
   }
 }
 
+// eslint-disable-next-line react/no-multi-comp
+class badComponent extends Component {
+  static propTypes = {
+    content: PropTypes.string,
+  };
+  static defaultProps = {
+    content: 'test',
+  };
+  componentWillMount() {
+    this.setState({
+      mounted: true,
+    });
+  }
+  render() {
+    return () => {};
+  }
+}
+
 const testPureComponent = props => props;
 
 // Tests
@@ -33,6 +51,10 @@ describe('fuzzReactComponent', () => {
 
   it('test component', () => {
     expect(fuzzReactComponent(testComponent, {})).toEqual([]);
+  });
+
+  it('tests bad component', () => {
+    expect(fuzzReactComponent(badComponent, {})).not.toEqual([]);
   });
 
   it('tests non component', () => {
