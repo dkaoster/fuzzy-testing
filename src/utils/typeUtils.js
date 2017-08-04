@@ -1,3 +1,5 @@
+// eslint-disable-next-line import/no-extraneous-dependencies
+import PropTypes from 'prop-types';
 // Import the list of bad strings
 import badStrings from './strings/badStrings';
 
@@ -24,7 +26,7 @@ const typesMap = {
 
 const primitiveTypesMap = {
   string: randomString,
-  bool: randomBool,
+  boolean: randomBool,
   number: randomNumber,
   int: randomInt,
   undefined: randomUndefined,
@@ -128,4 +130,17 @@ function randomFunc() {
   return () => randomPrimitive();
 }
 
-export { typesMap, primitiveTypesMap };
+function propTypesMap(type) {
+  switch (type) {
+    case PropTypes.string:
+      return typesMap.string;
+    case PropTypes.number:
+      return typesMap.number;
+    case PropTypes.shape:
+      return {};
+    default:
+      return typesMap.undefined;
+  }
+}
+
+export { typesMap, primitiveTypesMap, propTypesMap };

@@ -21,6 +21,7 @@ describe('fuzzFunction', () => {
   it('returns a bad result', () => {
     expect(fuzzFunction(add, {
       returnTypes: ['number'],
+      maxArgs: 2,
     })).not.toEqual([]);
   });
 
@@ -35,12 +36,14 @@ describe('fuzzFunction', () => {
   it('test divide', () => {
     expect(fuzzFunction(divide, {
       argumentValues: [0],
+      maxArgs: 2,
     })).toEqual([]);
   });
 
   it('test error', () => {
     expect(fuzzFunction(onlyBools, {
       canThrowError: true,
+      maxArgs: 1,
     })).toEqual([]);
   });
 });

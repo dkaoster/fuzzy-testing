@@ -1,5 +1,5 @@
 import assert from 'assert';
-import { combineMultipleLengths, typesMap } from './utils';
+import { combineMultipleLengths, typesMap, objectMap, propTypesMap } from './utils';
 
 /*
  *  _____ _   _ ____________   __
@@ -114,5 +114,83 @@ function fuzzFunction(func, options) {
   return errors;
 }
 
-// eslint-disable-next-line import/prefer-default-export
-export { fuzzFunction };
+/**
+ *
+ * fuzzReactComponent
+ *
+ * fuzzReactComponent takes a function and an object of options and fuzzes the component.
+ * It returns the results of the fuzz in an array.
+ *
+ * options:
+ *    returnTypes: can be an array of types represented by strings, or a function that validates.
+ *    returnFirstError: boolean that does short circuit evaluation if true.
+ *    argumentValues: an array of values that will be tested.
+ *    iterations: the number of times that a function will be run per argument combination.
+ *    canThrowError: whether or not the function can throw an error or not.
+ *
+ * @param Component
+ * @param options
+ * @returns {Array}
+ */
+function fuzzReactComponent(Component, options) {
+  // Ensure that component is a react component
+  assert((Component.prototype && Component.prototype.isReactComponent)
+    || typeof Component === 'function', 'Component is not a React Component');
+
+  // Process options
+  options = Object.assign({
+    returnFirstError: true,
+    iterations: 3,
+    argumentValues: [],
+    canThrowError: false,
+    returnTypes: ['string'],
+  }, options);
+
+  // Process props and generate values
+  if (!Component.propTypes) {
+    // Component has no props, no need to fuzz.
+    return [];
+  }
+
+  const randomProps = objectMap(Component.propTypes, propTypesMap);
+
+  // An array for keeping track of errors
+  const errors = [];
+
+  // Run the fuzzer on the function multiple times.
+  for (let iteration = 0; iteration < options.iterations; iteration += 1) {
+    const randomPropsInst = objectMap(randomProps, prop => prop());
+    // eslint-disable-next-line no-unused-vars
+    const comp = new Component(randomPropsInst);
+    try {
+      // If returnTypes is an array, look for the type inside the array.
+      if (Array.isArray(options.returnTypes) &&
+        options.returnTypes.indexOf(typeof comp.render()) < 0
+      ) {
+        errors.push(`arguments ${randomPropsInst} did not return one of ${options.returnTypes}`);
+        if (options.returnFirstError) {
+          return errors;
+        }
+      }
+      // If returnTypes is a function, execute the validation function on the result.
+      if (
+        (typeof options.returnTypes === 'function' && !options.returnTypes(comp.render()))
+      ) {
+        errors.push(`arguments ${randomPropsInst} did not satisfy ${options.returnTypes}`);
+        if (options.returnFirstError) {
+          return errors;
+        }
+      }
+    } catch (e) {
+      if (!options.canThrowError) {
+        errors.push(`arguments ${randomPropsInst} threw error ${e}`);
+        if (options.returnFirstError) {
+          return errors;
+        }
+      }
+    }
+  }
+  return [];
+}
+
+export { fuzzFunction, fuzzReactComponent };
