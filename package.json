@@ -1,13 +1,14 @@
 {
   "name": "fuzzy-testing",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Javascript fuzz testing tools",
   "main": "index.js",
   "scripts": {
     "prepublish": "npm run lint && npm run test && npm run build",
     "build": "babel --out-dir build src --ignore **/*.test.js",
     "test": "jest",
-    "lint": "eslint ./src"
+    "lint": "eslint ./src",
+    "publish": "npm-publish",
   },
   "repository": {
     "type": "git",
