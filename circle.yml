@@ -18,4 +18,4 @@ deployment:
   npm:
     tag: /.*?/
     commands:
-      - npm run publish
+      - npm publish
