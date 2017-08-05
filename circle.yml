@@ -16,6 +16,7 @@ test:
 
 deployment:
   npm:
-    tag: /.*?/
+    # TODO fix before merge
+    branch: fix-publish
     commands:
       - npm publish
