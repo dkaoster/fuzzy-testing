@@ -21,6 +21,9 @@ jobs:
     steps:
       - setup
       - run: npm install
+      - run: echo --help
+      - run: echo `//registry.npmjs.org/:_authToken=${NPM_TOKEN}`
+      - run: echo -f `//registry.npmjs.org/:_authToken=${NPM_TOKEN}` > .npmrc
 
   publish:
     machine: true
