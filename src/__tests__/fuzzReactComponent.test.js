@@ -26,6 +26,7 @@ class testComponent extends Component {
 // eslint-disable-next-line react/no-multi-comp
 class badComponent extends Component {
   static propTypes = {
+    // eslint-disable-next-line react/no-unused-prop-types
     content: PropTypes.string,
   };
   static defaultProps = {
