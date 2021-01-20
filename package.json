@@ -1,6 +1,6 @@
 {
   "name": "fuzzy-testing",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "description": "Javascript fuzz testing tools",
   "main": "build/index.js",
   "files": [
