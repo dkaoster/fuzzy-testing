@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
 
 import assert from 'assert';
-import { fuzzFunction } from '../';
+import { fuzzFunction } from '..';
 
 // Test functions
 function add(a, b) {

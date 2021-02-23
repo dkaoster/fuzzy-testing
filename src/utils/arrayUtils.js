@@ -35,7 +35,7 @@ function combineToArray(a, b) {
   // ensure that arrays were given
   assert(Array.isArray(a), 'a is not an array.');
   assert(Array.isArray(b), 'b is not an array.');
-  a.map(item => assert(Array.isArray(item), 'item in a is not an array.'));
+  a.map((item) => assert(Array.isArray(item), 'item in a is not an array.'));
 
   const superSet = [];
   a.forEach((aElem) => {
@@ -97,4 +97,6 @@ function combineMultipleLengths(a, end, start) {
   return flattenedCollector;
 }
 
-export { combine, combineToArray, combineMultiple, combineMultipleLengths };
+export {
+  combine, combineToArray, combineMultiple, combineMultipleLengths,
+};

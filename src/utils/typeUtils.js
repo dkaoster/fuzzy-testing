@@ -41,8 +41,8 @@ const primitiveTypesMap = {
  * @returns {*}
  */
 function randomPrimitive() {
-  return Object.values(primitiveTypesMap)[Math.floor(Math.random() *
-    Object.values(primitiveTypesMap).length)]();
+  return Object.values(primitiveTypesMap)[Math.floor(Math.random()
+    * Object.values(primitiveTypesMap).length)]();
 }
 
 /**

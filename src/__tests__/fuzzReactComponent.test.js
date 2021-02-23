@@ -1,48 +1,43 @@
 /* eslint-disable no-undef */
 
+// eslint-disable-next-line max-classes-per-file
 import { Component } from 'react';
 import PropTypes from 'prop-types';
-import { fuzzReactComponent } from '../';
+import { fuzzReactComponent } from '..';
 
 // test components
 class testComponent extends Component {
-  static propTypes = {
-    content: PropTypes.string,
-  };
-  static defaultProps = {
-    content: 'test',
-  };
-  componentWillMount() {
-    this.setState({
-      mounted: true,
-    });
-  }
   render() {
     const { content } = this.props;
     return content;
   }
 }
 
+testComponent.propTypes = {
+  content: PropTypes.string,
+};
+
+testComponent.defaultProps = {
+  content: 'test',
+};
+
 // eslint-disable-next-line react/no-multi-comp
 class badComponent extends Component {
-  static propTypes = {
-    // eslint-disable-next-line react/no-unused-prop-types
-    content: PropTypes.string,
-  };
-  static defaultProps = {
-    content: 'test',
-  };
-  componentWillMount() {
-    this.setState({
-      mounted: true,
-    });
-  }
   render() {
     return () => {};
   }
 }
 
-const testPureComponent = props => props;
+badComponent.propTypes = {
+  // eslint-disable-next-line react/no-unused-prop-types
+  content: PropTypes.string,
+};
+
+badComponent.defaultProps = {
+  content: 'test',
+};
+
+const testPureComponent = (props) => props;
 
 // Tests
 describe('fuzzReactComponent', () => {

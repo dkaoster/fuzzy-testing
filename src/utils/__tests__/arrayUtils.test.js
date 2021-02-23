@@ -1,6 +1,8 @@
 /* eslint-disable no-undef */
 
-import { combine, combineToArray, combineMultiple, combineMultipleLengths } from '../arrayUtils';
+import {
+  combine, combineToArray, combineMultiple, combineMultipleLengths,
+} from '../arrayUtils';
 
 describe('arrayUtils tests', () => {
   it('combines two arrays', () => {
