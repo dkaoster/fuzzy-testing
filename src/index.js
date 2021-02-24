@@ -1,5 +1,7 @@
 import assert from 'assert';
-import { combineMultipleLengths, typesMap, objectMap, propTypesMap } from './utils';
+import {
+  combineMultipleLengths, typesMap, objectMap, propTypesMap,
+} from './utils/index';
 
 /*
  *  _____ _   _ ____________   __
@@ -37,7 +39,7 @@ import { combineMultipleLengths, typesMap, objectMap, propTypesMap } from './uti
  */
 function fuzzFunction(func, options) {
   // Process options
-  options = Object.assign({
+  options = {
     returnTypes: Object.keys(typesMap),
     returnFirstError: true,
     maxArgs: 5,
@@ -46,7 +48,8 @@ function fuzzFunction(func, options) {
     argumentValues: [],
     iterations: 3,
     canThrowError: false,
-  }, options);
+    ...options,
+  };
 
   // validate options
   assert(typeof options.returnTypes === 'function' || Array.isArray(options.returnTypes),
@@ -61,9 +64,9 @@ function fuzzFunction(func, options) {
 
   // Generates an array of all the functions to generate the argument types and values
   // that we want to fuzz with. If argument type does not exist, filter it out.
-  const argsFunc = options.argumentTypes.filter(argType => typeof typesMap[argType] === 'function')
-    .map(argType => typesMap[argType])
-    .concat(options.argumentValues.map(value => (() => value)));
+  const argsFunc = options.argumentTypes.filter((argType) => typeof typesMap[argType] === 'function')
+    .map((argType) => typesMap[argType])
+    .concat(options.argumentValues.map((value) => (() => value)));
 
   // Generates all combinations of arguments
   const randomArgs = combineMultipleLengths(argsFunc, options.maxArgs, options.minArgs);
@@ -77,13 +80,13 @@ function fuzzFunction(func, options) {
     // Run the fuzzer on the function multiple times.
     for (let iteration = 0; iteration < options.iterations; iteration += 1) {
       // Instantiate all the arguments.
-      const args = randomArgs[index].map(arg => arg());
+      const args = randomArgs[index].map((arg) => arg());
 
       // Try the fuzzer, and compare the result to returnTypes.
       try {
         // If returnTypes is an array, look for the type inside the array.
-        if (Array.isArray(options.returnTypes) &&
-          options.returnTypes.indexOf(typeof func(...args)) < 0
+        if (Array.isArray(options.returnTypes)
+          && options.returnTypes.indexOf(typeof func(...args)) < 0
         ) {
           errors.push(`arguments ${args} did not return one of ${options.returnTypes}`);
           if (options.returnFirstError) {
@@ -138,20 +141,23 @@ function fuzzReactComponent(Component, options) {
     || typeof Component === 'function', 'Component is not a React Component');
 
   // Process options
-  options = Object.assign({
+  options = {
     returnFirstError: true,
     iterations: 3,
     argumentValues: [],
     canThrowError: false,
     returnTypes: ['string'],
-  }, options);
+    ...options,
+  };
 
   // Process props and generate values
+  // eslint-disable-next-line react/forbid-foreign-prop-types
   if (!Component.propTypes) {
     // Component has no props, no need to fuzz.
     return [];
   }
 
+  // eslint-disable-next-line react/forbid-foreign-prop-types
   const randomProps = objectMap(Component.propTypes, propTypesMap);
 
   // An array for keeping track of errors
@@ -159,13 +165,13 @@ function fuzzReactComponent(Component, options) {
 
   // Run the fuzzer on the function multiple times.
   for (let iteration = 0; iteration < options.iterations; iteration += 1) {
-    const randomPropsInst = objectMap(randomProps, prop => prop());
+    const randomPropsInst = objectMap(randomProps, (prop) => prop());
     // eslint-disable-next-line no-unused-vars
     const comp = new Component(randomPropsInst);
     try {
       // If returnTypes is an array, look for the type inside the array.
-      if (Array.isArray(options.returnTypes) &&
-        options.returnTypes.indexOf(typeof comp.render()) < 0
+      if (Array.isArray(options.returnTypes)
+        && options.returnTypes.indexOf(typeof comp.render()) < 0
       ) {
         errors.push(`arguments ${randomPropsInst} did not return one of ${options.returnTypes}`);
         if (options.returnFirstError) {

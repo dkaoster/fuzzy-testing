@@ -1,7 +1,5 @@
 # Fuzzy-Testing
 
-[![CircleCI](https://circleci.com/gh/dkaoster/Fuzzy.svg?style=svg&circle-token=9dd14dcc291ae8308cd25102f95815ad69ce29de)](https://circleci.com/gh/dkaoster/Fuzzy)
-
 Fuzz testing tools for node.
 
 Because javascript is a loosely typed language, it is difficult to prepare for all the different possible types that a function might receive. In order to better build stable javascript applications, fuzzy-testing is a tool that will try many possible combinations of data types within arguments.

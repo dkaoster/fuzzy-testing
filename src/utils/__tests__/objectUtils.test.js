@@ -8,7 +8,7 @@ describe('objectUtils tests', () => {
       test: 1,
       test2: 2,
     },
-    item => item + 1)).toEqual({
+    (item) => item + 1)).toEqual({
       test: 2,
       test2: 3,
     });
@@ -23,7 +23,7 @@ describe('objectUtils tests', () => {
         test2: 2,
       },
     },
-    item => item + 1)).toEqual({
+    (item) => item + 1)).toEqual({
       test: 2,
       test2: 3,
       test3: {
