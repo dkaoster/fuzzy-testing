@@ -1,6 +1,6 @@
 {
   "name": "fuzzy-testing",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "description": "Javascript fuzz testing tools",
   "main": "build/fuzzy.cjs.js",
   "jsnext:main": "build/fuzzy.es.js",
